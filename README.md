@@ -5,3 +5,6 @@ Reproductor de audio para Icecast en html y  javascript con  las siguientes func
 - Botón de reproducción circular que cambia entre play/pause.
 - Soporte para logo de la emisora.
 - Contador de oyentes.
+
+![image](https://github.com/user-attachments/assets/803a03a3-ac43-49dc-b59c-a734bef42a6f)
+
