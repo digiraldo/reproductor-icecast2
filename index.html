@@ -103,25 +103,24 @@
     // URL base del servidor Icecast
     const serverUrl = 'https://radio.policia.gov.co:8080';
 
-
     // Cargar puntos de montaje
     async function loadMountPoints() {
         try {
             const response = await fetch(`${serverUrl}/status-json.xsl`);
             const data = await response.json();
-            const data2 = data.icestats.source;
 
             data.icestats.source.forEach(source => {
                 const option = document.createElement('option');
                 const server_url = serverUrl + "/" + source.server_url;
                 option.value = server_url;
-                option.textContent = source.server_name;
+                // Decodificar el nombre de la emisora
+                const decodedName = decodeURIComponent(escape(source.server_name));
+                option.textContent = decodedName;
                 mountPoints.appendChild(option);
             });
         } catch (error) {
             console.error('Error al cargar puntos de montaje:', error);
         }
-
     }
 
     // Actualizar contador de oyentes
@@ -130,16 +129,16 @@
             const response = await fetch(`${serverUrl}/status-json.xsl`);
             const data = await response.json();
             const currentMount = mountPoints.value.split('/').pop();
-            //console.log(currentMount);
             const source = data.icestats.source.find(s => s.server_url === currentMount);
             if (source) {
                 listenerCount.textContent = source.listeners;
+                // Actualizar el nombre decodificado si es necesario
+                const decodedName = decodeURIComponent(escape(source.server_name));
+                // Actualizar cualquier elemento que muestre el nombre de la emisora
             }
-
         } catch (error) {
             console.error('Error al actualizar oyentes:', error);
         }
-
     }
 
     async function updateTotalListeners() {
