@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjeta Moderna</title>
+    <title>Emisoras Online</title>
     <link rel="icon" type="image/x-icon" href="radio-emi.ico">
     <!-- Bootstrap CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -117,11 +117,11 @@
                 option.value = server_url;
                 option.textContent = source.server_name;
                 mountPoints.appendChild(option);
-
             });
         } catch (error) {
             console.error('Error al cargar puntos de montaje:', error);
         }
+
     }
 
     // Actualizar contador de oyentes
@@ -189,13 +189,14 @@
             volumeIcon.style.color = 'red';
         } else if (volume < 0.4) {
             volumeIcon.className = 'fas fa-volume-off';
-            volumeIcon.style.color = 'purple';
+            volumeIcon.style.color = '';
+            // volumeIcon.style.color = 'purple';
         } else if (volume < 0.7) {
             volumeIcon.className = 'fas fa-volume-down';
-            volumeIcon.style.color = 'navy';
+            // volumeIcon.style.color = 'navy';
         } else {
             volumeIcon.className = 'fas fa-volume-up';
-            volumeIcon.style.color = 'green';
+            // volumeIcon.style.color = 'green';
         }
     });
 
@@ -212,6 +213,7 @@
             playButton.innerHTML = '<i class="fas fa-play"></i>';
             playButton.style.backgroundColor = '#007bff';
             //audioPlayer.play();
+            updateListenerCount();
             if (!audioPlayer.paused) {
                 alert(currentMountPoint);
                 audioPlayer.play();
