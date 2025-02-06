@@ -232,12 +232,14 @@ if (LocalStorageTheme === 'dark-mode') {
 
     // Cargar puntos de montaje al iniciar
     loadMountPoints();
+    // Cargar total de oyentes al iniciar
+    updateTotalListeners();
 
     // Actualizar contador de oyentes cada 10 segundos
     setInterval(updateListenerCount, 10000);
 
-    // Actualizar contador de total de oyentes cada 10 segundos
-    setInterval(updateTotalListeners, 10000);
+    // Actualizar contador de total de oyentes cada 20 segundos
+    setInterval(updateTotalListeners, 20000);
 
 });
 
