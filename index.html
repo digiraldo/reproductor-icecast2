@@ -10,137 +10,187 @@
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .card {
-            transition: all 0.3s ease;
-            max-width: 400px;
-            margin: 20px auto;
-        }
+/* Importar las fuentes (eliminar duplicados) */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
 
-        .dark-mode {
-            background-color: #333;
-            color: #fff;
-        }
+.card {
+    transition: all 0.3s ease;
+    max-width: 400px;
+    margin: 20px auto;
+}
 
-        .dark-mode .card {
-            background-color: #444;
-            color: #fff;
-        }
+/* Estilos del modo oscuro */
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
 
-        .dark-mode .card .card-header {
-            background-color: #3f3f3f;
-            color: #fff;
-        }
+.dark-mode .card {
+    background-color: #444;
+    color: #fff;
+}
 
-        .dark-mode .card .card-footer {
-            background-color: #3f3f3f;
-            color: #fff;
-        }
+.dark-mode .card .card-header,
+.dark-mode .card .card-footer {
+    background-color: #3f3f3f;
+    color: #fff;
+}
 
-        .theme-toggle {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
+.dark-mode #visualizer {
+    background-color: #444;
+}
 
-        .logo-img {
-            max-width: 200px;
-            height: auto;
-            margin: 0 auto;
-        }
-        .dark-mode #visualizer {
-        background-color: #444;
-        }
+/* Estilos del reproductor circular */
+.circular-player {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background-color: #ff4444;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
 
-        .card-header {
-        overflow: hidden;
-        min-height: auto; /* Aumentado para dar más espacio */
-        padding: 20px;
-        position: relative;
-        }
+.circular-player.online {
+    background-color: #4CAF50 !important;
+}
 
-        #visualizer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0.3;
-        }
+.circular-player.playing {
+    background-color: #2196F3 !important;
+}
 
-        .logo-img {
-            max-width: 200px;
-            height: auto;
-            margin: 0 auto;
-            display: block;
-            position: relative;
-            z-index: 2;
-        }
-        #genreDisplay {
-            /* color: #28a745; */
-            transition: all 0.3s ease;
-        }
+/* Estilos del selector */
+.form-select {
+    font-family: 'Work Sans', sans-serif;
+    font-size: 35px;
+    text-transform: capitalize;  
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: inherit;
+    font-weight: bold;
+    text-align: center;
+    text-align-last: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2328a745' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
 
-        .dark-mode #genreDisplay {
-            /* color: #2fd455; */
-        }
-        /* Estilos para el selector */
-        .form-select {
-        text-transform: capitalize;  /* Añadido para capitalizar */
-        background-color: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0);
-        color: rgb(25, 135, 84);
-        font-size: 1.8rem;
-        font-weight: bold;
-        text-align: center;
-        text-align-last: center;
-        padding: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2328a745' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-    }
+.form-select:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
 
-    /* Estilo al pasar el mouse */
-    .form-select:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-        border-color: rgb(25, 135, 84);
-    }
+.form-select:focus {
+    box-shadow: none;
+    border: none;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.15);
+}
 
-    /* Estilo cuando está enfocado */
-    .form-select:focus {
-        box-shadow: none;
-        border-color: rgb(25, 135, 84);
-        background-color: rgba(255, 255, 255, 0.15);
-    }
+/* Estilos del género */
+#genreDisplay {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 55px;
+    color: #A8D42E !important;
+    transition: all 0.3s ease;
+    line-height: 1;
+    margin: 0;
+    padding: 1px 0;
+}
 
-    /* Estilos para las opciones del selector */
-    .form-select option {
-        text-transform: capitalize;  /* Añadido para capitalizar las opciones */
-        background-color: #fff;
-        color: #333;
-        text-align: center;
-        font-size: 1.1rem;
-        font-weight: bold;
-        padding: 10px;
-    }
+#genreDisplay i {
+    color: #A8D42E !important;
+    font-size: 50px;
+}
 
-    /* Estilos para modo oscuro */
-    .dark-mode .form-select {
-        background-color: rgba(0, 0, 0, 0);
-        color: rgb(25, 135, 84);
-        /* Cambiar el color de la flecha a blanco en modo oscuro */
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-    }
+/* Mantener colores en modo oscuro */
+.dark-mode #genreDisplay {
+    color: #A8D42E !important;
+}
 
-    .dark-mode .form-select option {
-        background-color: #333;
-        color: #fff;
-    }
-    #mountPoints {
-        max-width: 100%;
-        margin: 0 auto;
-    }
+.dark-mode .form-select {
+    background-color: rgba(0, 0, 0, 0);
+    color: inherit;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+}
+
+.dark-mode .form-select option {
+    background-color: #333;
+    color: #fff;
+    font-size: 16px;
+}
+
+/* Estilos del visualizador */
+#visualizer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+/* Estilos de los botones y controles */
+.play-pause-btn {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play-pause-btn i {
+    color: white;
+    font-size: 60px;
+}
+
+.circular-player:hover .play-pause-btn {
+    opacity: 1;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Estilos del contador de oyentes */
+.listeners-count {
+    font-size: 16px;
+}
+
+#listenersCount {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Estilos para el logo */
+.logo-img {
+    max-width: 200px; /* Ajusta este valor según necesites */
+    height: auto;
+    position: relative;
+    z-index: 2;
+    padding: 10px;
+}
+
+/* Si necesitas ajustar el contenedor del logo */
+.card-header {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
     </style>
+
 </head>
 <body>
  
@@ -157,13 +207,14 @@
     </div>
     <div class="card-body">
         
-        <h4>Oyentes Emisora <span id="listenerCount" class="badge text-bg-success">0</span></h4>
-        <select class="form-select mb-3" id="mountPoints">
+        <h4 class="text-primary">Oyentes Emisora <span id="listenerCount" class="badge text-bg-primary">0</span></h4>
+        <select class="form-select mb-0 p-0" id="mountPoints">
             <option value="">Seleccionar Emisora</option>
         </select>
+
         
         <!-- Añadir el género -->
-        <h1 id="genreDisplay" class="text-center mb-3 text-success" style="font-size: 1.8rem; font-weight: bold;">
+        <h1 id="genreDisplay" class="text-center mb-4 p-0 text-success" style="font-size: 1.8rem; font-weight: bold;">
             <span><i class="fas fa-music"></i></span>
         </h1>
         <div class="text-center">
@@ -350,8 +401,17 @@
         if (streamUrl) {
             const selectedOption = mountPoints.options[mountPoints.selectedIndex];
             const genre = selectedOption.getAttribute('data-genre');
+            
+            // Actualizar el género con el ícono y los estilos
             genreDisplay.innerHTML = `${genre}`;
             
+            // Asegurar que los estilos se apliquen
+            genreDisplay.style.fontFamily = 'Montserrat, sans-serif';
+            genreDisplay.style.fontSize = '55px';
+            genreDisplay.style.color = '#A8D42E';
+            genreDisplay.style.fontWeight = '700';
+            
+            // El resto de tu código existente...
             audioPlayer.src = streamUrl;
             playButton.innerHTML = '<i class="fas fa-play"></i>';
             playButton.style.backgroundColor = '#007bff';
